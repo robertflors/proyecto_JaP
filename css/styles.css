@@ -188,3 +188,25 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+/* ---------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------AUNTENTICACIÓN----------------------------------------------------- */
+.tituloEmercado{
+  color: #53C0FB;
+  font-size: 50px;
+  text-align: center;
+}
+
+div.container form{
+  text-align: center;
+}
+
+div.container form button.btn {
+  background-color: #53C0FB;
+  border-color: #53C0FB;  
+}
+
+p#validacionEmail,p#validacionContrasenia{
+  color: red;
+  display: none;
+}
