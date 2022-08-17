@@ -191,6 +191,13 @@ a.custom-card:hover {
 
 /* ---------------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------AUNTENTICACIÓN----------------------------------------------------- */
+div#landingPage{
+  display: none;
+}
+
+div#autenticacion{
+  display: contents;
+}
 .tituloEmercado{
   color: #53C0FB;
   font-size: 50px;

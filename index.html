@@ -12,6 +12,30 @@
 </head>
 
 <body>
+  <!--------------------------------------AUTENTUCACIÓN--------------------------------------------------------------------------------------------------------->
+  <div id="autenticacion">
+    <div class="container">
+      <h2 class="tituloEmercado">e-mercado</h2>
+      <form id="inicioSesion">
+          <div class="mb-3">
+            <label for="emailUsuario" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailUsuario" aria-describedby="emailHelp" onkeypress="document.getElementById('validacionEmail').style.display = 'none';">
+            <p id="validacionEmail">debe ingresar un email válido</p>
+          </div>
+          <div class="mb-3">
+            <label for="contraseniaUsuario" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contraseniaUsuario" onkeypress="document.getElementById('validacionContrasenia').style.display = 'none';">
+            <p id="validacionContrasenia">debe ingresar una contraseña válida</p>
+          </div>
+          <button type="submit" class="btn">Ingresar</button>
+        </form>
+
+        <div>2022</div>
+  </div>
+  </div>
+
+  <!--------------------------------------------INDEX----------------------------------------------------------------------------------------------------------->
+  <div id="landingPage">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -77,6 +101,7 @@
       </div>
     </div>
   </main>
+</div>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -87,8 +112,10 @@
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/autenticacion.js"></script>   
   <script src="js/init.js"></script>
 </body>
 
