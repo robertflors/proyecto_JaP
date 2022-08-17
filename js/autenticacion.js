@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let email = document.getElementById('emailUsuario');    
     if(email.value.length == 0) {
       alertaEmail.style.display = 'inline-block';
-      email.addEventListener('onkeypress', () => alertaEmail.style.display = 'none');
     }
     let contrasenia = document.getElementById('contraseniaUsuario');
     if (contrasenia.value.length < 6) {

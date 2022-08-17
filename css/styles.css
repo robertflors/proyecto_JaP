@@ -210,3 +210,11 @@ p#validacionEmail,p#validacionContrasenia{
   color: red;
   display: none;
 }
+
+/* ---------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------PRODUCTOS---------------------------------------------------------- */
+
+main.container div#productos__contenedorSubtitulo{
+  text-align: center;
+  margin-top: 1vh;
+}

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+  
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -36,13 +37,20 @@
       </div>
     </div>
   </nav>
+
+
   <main class="pb-5 container">
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container" id="productos__contenedorSubtitulo">
+      <h2>Productos</h2>
+      <p>Verás aquí todos los productos de la categoría <strong id="categoriaProductoSubtitulo"></strong>.</p>
+    </div>
+    <!--------------------------------------------------------------DIV DONDE SE DESPLEGARÁN LOS PRODUCTOS---------------------------------------------------------------------------------------------------------------->
+    <div class="container" id="mostrarProductosCategoria">
+      
     </div>
   </main>
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -53,6 +61,7 @@
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -61,9 +70,11 @@
       <div></div>
     </div>
   </div>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
+
 </body>
 
 </html>
