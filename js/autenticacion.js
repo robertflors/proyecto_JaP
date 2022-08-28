@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     // si se cumplen las condiciones se muestra la página
     if ((booleano1 == true)&&(booleano2 == true)){
+      localStorage.removeItem('usuario');
+      localStorage.setItem('usuario', email.value);
+      usuarioEnNavbar();
       indexAutenticacion.style.display = 'none';
       indexLanding.style.display = 'contents';
     }
