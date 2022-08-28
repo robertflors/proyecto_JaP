@@ -8,8 +8,8 @@ const PRODUCTOS_ID = localStorage.getItem("catID");
 const PRODUCTOS_URL = "https://japceibal.github.io/emercado-api/cats_products/" + PRODUCTOS_ID + ".json";
 
 // Función para mostrar la lista desplegada de productos de determinada categoría
-function showProductsList (productos) { 
-  
+function showProductsList(productos) {
+
     for (const producto of productos) {
         mostrarProductos.innerHTML += `
             <div class="list-group-item list-group-item-action cursor-active">
@@ -26,18 +26,16 @@ function showProductsList (productos) {
                     </div>
                 </div>
             </div>
-            `;   
-    }   
- }
-
-document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(PRODUCTOS_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            categoriaSubtitulo.append(resultObj.data.catName); //para agregar el nombre al strong que hay en el subtítulo del products.html     
-            showProductsList(resultObj.data.products);            
-        }       
-       
-    });
+            `;
+    }
 }
-);
 
+document.addEventListener("DOMContentLoaded", function (e) {
+    getJSONData(PRODUCTOS_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            categoriaSubtitulo.append(resultObj.data.catName); //para agregar el nombre al strong que hay en el subtítulo del products.html     
+            showProductsList(resultObj.data.products);
+        }
+
+    });
+});
