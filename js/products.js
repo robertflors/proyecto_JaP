@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // seteo otro para preservar los datos "originales"
             localStorage.removeItem('productos');
             localStorage.setItem('productos', JSON.stringify(resultObj.data.products));
+            // arrayProductos = resultObj.data.products;
+            // console.log(arrayProductos);
         }
     });
 });
@@ -58,6 +60,7 @@ const rangoPrecioMax = document.getElementById('filterRangoPrecioMax');
 const botonRangoPrecio = document.getElementById('filterRangoPrecio');
 const limpiarFiltroRango = document.getElementById('limpiarRangoPrecio');
 const barraBusqueda = document.getElementById('barraBusqueda');
+// let arrayProductos = [];
 
 function ordenarProductos(e) {
     // obtenemos el ID del input que está disparando el evento para luego hacer los condicionales
