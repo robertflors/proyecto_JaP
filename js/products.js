@@ -40,11 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // seteamos en el local storage el arreglo que sacamos de la promesa para usarlo más adelante  
             localStorage.removeItem('listaProductos');
             localStorage.setItem('listaProductos', JSON.stringify(resultObj.data.products));
-            // seteo otro para preservar los datos "originales"
-            localStorage.removeItem('productos');
-            localStorage.setItem('productos', JSON.stringify(resultObj.data.products));
-            // arrayProductos = resultObj.data.products;
-            // console.log(arrayProductos);
+            //llenamos la variable global con los datos del json, para usarla en otro momento
+            arrayProductos = resultObj.data.products;
         }
     });
 });
@@ -60,7 +57,7 @@ const rangoPrecioMax = document.getElementById('filterRangoPrecioMax');
 const botonRangoPrecio = document.getElementById('filterRangoPrecio');
 const limpiarFiltroRango = document.getElementById('limpiarRangoPrecio');
 const barraBusqueda = document.getElementById('barraBusqueda');
-// let arrayProductos = [];
+let arrayProductos = [];
 
 function ordenarProductos(e) {
     // obtenemos el ID del input que está disparando el evento para luego hacer los condicionales
@@ -79,19 +76,22 @@ function ordenarProductos(e) {
 
 function filtrarProductos() {
     //creamos una variable que será el array de productos filtrados con los rangos de precios ingresados en los imputs
-    let productosFiltrados = JSON.parse(localStorage.getItem('productos')). //salto de línea para mejor lectura
-    filter(producto => producto.cost >= parseInt(rangoPrecioMin.value) && producto.cost <= parseInt(rangoPrecioMax.value));
-    showProductsList(productosFiltrados);
-    // seteamos el array filtrado para poder ordenarlos según sea el caso
-    localStorage.setItem('listaProductos', JSON.stringify(productosFiltrados));
+    let productosFiltrados = [];
+    // si alguno de los campos de los inputs está vacío, no hace nada
+    if ((rangoPrecioMin.value !== '') && (rangoPrecioMax.value !== '')) {
+        productosFiltrados = arrayProductos. //salto de línea para mejor lectura
+        filter(producto => producto.cost >= parseInt(rangoPrecioMin.value) && producto.cost <= parseInt(rangoPrecioMax.value));
+        showProductsList(productosFiltrados);
+        // seteamos el array filtrado para poder ordenarlos según sea el caso
+        localStorage.setItem('listaProductos', JSON.stringify(productosFiltrados));
+    }
 }
 
 function busquedaFiltro() {
     let busqueda = barraBusqueda.value.toLowerCase(); // lo que el usuario ingresa en la barra de búsqueda
     let productosBarraBusqueda = [];
-    let productos = JSON.parse(localStorage.getItem('productos'));
 
-    for (const producto of productos) {
+    for (const producto of JSON.parse(localStorage.getItem('listaProductos'))) {
         // obtener los nombres y descripciones de cada producto y pasarlos a minúscula
         nombre = producto.name.toLowerCase();
         descripcion = producto.description.toLowerCase();
@@ -109,4 +109,7 @@ precioDes.addEventListener('click', ordenarProductos);
 relevancia.addEventListener('click', ordenarProductos);
 botonRangoPrecio.addEventListener('click', filtrarProductos);
 // botón en forma de enlace que reinicia los filtros mostrando el array de productos originales
-limpiarFiltroRango.addEventListener('click', () => showProductsList(JSON.parse(localStorage.getItem('productos'))));
+limpiarFiltroRango.addEventListener('click', () => {
+    localStorage.setItem('listaProductos', JSON.stringify(arrayProductos));
+    showProductsList(arrayProductos);
+});
