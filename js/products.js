@@ -14,7 +14,7 @@ function showProductsList(productos) {
 
     for (const producto of productos) {
         mostrarProductos.innerHTML += `
-            <div class="list-group-item list-group-item-action cursor-active"> 
+            <div class="list-group-item list-group-item-action cursor-active" id="${producto.id}" onclick="productoInfo(${producto.id})"> 
                 <div class="row">
                     <div class="col-3">
                         <img src="${producto.image}" alt="${producto.description}" class="img-thumbnail">
@@ -113,3 +113,12 @@ limpiarFiltroRango.addEventListener('click', () => {
     localStorage.setItem('listaProductos', JSON.stringify(arrayProductos));
     showProductsList(arrayProductos);
 });
+
+// ------------------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------MOSTRAR INFO PRODUCTO-----------------------------------------------------------------------------
+function productoInfo(ID){
+    // seteamos el id en el localStorage y redirigimos a productos info
+    localStorage.removeItem('productoInfoID');
+    localStorage.setItem('productoInfoID', ID);
+    window.location.href = "product-info.html";
+}
