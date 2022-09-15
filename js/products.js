@@ -84,6 +84,12 @@ function filtrarProductos() {
         showProductsList(productosFiltrados);
         // seteamos el array filtrado para poder ordenarlos según sea el caso
         localStorage.setItem('listaProductos', JSON.stringify(productosFiltrados));
+    } else if ((rangoPrecioMin.value !== '') || (rangoPrecioMax.value !== '')){
+        productosFiltrados = arrayProductos. //salto de línea para mejor lectura
+        filter(producto => producto.cost >= parseInt(rangoPrecioMin.value) || producto.cost <= parseInt(rangoPrecioMax.value));
+        showProductsList(productosFiltrados);
+        // seteamos el array filtrado para poder ordenarlos según sea el caso
+        localStorage.setItem('listaProductos', JSON.stringify(productosFiltrados));
     }
 }
 

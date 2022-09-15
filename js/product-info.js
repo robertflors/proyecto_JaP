@@ -3,7 +3,11 @@ const URL_COMENTARIOS = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem('produc
 const contenedorProducto = document.getElementById('productoInfoDetallada');
 const tituloProducto = document.getElementById('tituloProductoInfo');
 const comentariosUsuarios = document.getElementById('productoComentariosDesplegados');
+const mostrarComentarios = document.getElementById('mostrarComentarios');
 let comentarios;
+const formularioParaComentar = document.getElementById('comentarProducto');
+const formularioComentario = document.getElementById('nuevoComentario');
+const formularioPuntuacion = document.getElementById('nuevaPuntuacion');
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -16,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     getJSONData(URL_COMENTARIOS).then(function (resultObj) {
         if (resultObj.status === "ok") {           
-            showProductsComents(resultObj.data);
             comentarios = resultObj.data;
         }
     });
@@ -59,7 +62,7 @@ function showProductsInfo(data){
 function arrayImagenes(imagenes) {
     let grupoDivsImg = '';
     for (const img of imagenes){
-        grupoDivsImg += `<div class="contenedorProductoImg shadow-sm p-3 mb-5 bg-body rounded"><img src"${img}">${img}</div>`;
+        grupoDivsImg += `<div class="container shadow-sm p-3 mb-5 bg-body rounded"><img class="img-fluid" src="${img}"></div>`;
     }
     return grupoDivsImg;   
   }
@@ -104,3 +107,55 @@ function puntuacionColor(puntaje, usuario){
         puntuacionProducto[i].classList.add('checked');
     }
 }
+
+// FUNCIÓN PARA GENERAR UN NUEVO COMENTARIO EN NUESTRA LISTA DE COMENTARIOS
+function nuevaCalificacion(e){
+  e.preventDefault();
+  // para capturar la fecha en la que fue hecha el comentario
+  let fecha = new Date(Date.now());
+  let fechaComentario = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
+  // buscamos el nombre del usuario actual en la página
+  let usuario = localStorage.getItem('usuario');
+  // verificamos que el usuario haya llenado al menos el score del producto para poder calificar
+  if(formularioPuntuacion.value !== 'tu puntuación'){
+    // condicional con la función que retorna true si el usuario no ha hecho calificaciones aún
+    if(comentarioRepetido(usuario)){
+      // creamos el nuevo objeto para pushear a la lista de comentarios
+      comentarios.push({
+        dateTime: fechaComentario,
+        description: formularioComentario.value,
+        score: parseInt(formularioPuntuacion.value),
+        user: usuario
+      });
+      showProductsComents(comentarios); 
+      // vaciamos los inputs luego de subido el comentario
+      formularioComentario.value = '';
+      formularioPuntuacion.value = 'tu puntuación';
+    } else {
+
+      alert('ya calificaste este producto');
+      // vaciamos los inputs luego de subido el comentario
+      formularioComentario.value = '';
+      formularioPuntuacion.value = 'tu puntuación';
+    }
+
+  }else{
+    alert('seleccionar el puntaje para poder calificar');
+  }   
+}
+
+// FUNCIÓN PARA VERIFICAR QUE NO SE REPITAN COMENTARIOS DEL MISMO USUARIO
+function comentarioRepetido(user){
+  let usuariosQueComentaron = [];
+  // llenamos el nuevo array con los nombres de los usuarios
+   for(const comentario of comentarios){
+    usuariosQueComentaron.push(comentario.user);
+   }
+  // para verificar si está o no incluido el usuario en la lista de usuarios que comentaron
+   return usuariosQueComentaron.indexOf(user) === -1;
+}
+
+// EVENTO PARA MOSTRAR LOS COMENTARIOS
+mostrarComentarios.addEventListener('click', ()=> showProductsComents(comentarios));
+// EVENTO PARA SUBIR LAS NUEVAS CALIFICACIONES
+formularioParaComentar.addEventListener('submit', nuevaCalificacion);
