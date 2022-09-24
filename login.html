@@ -19,10 +19,25 @@
 <body>
   <main class="mt-5">
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
+      <h2 class="tituloEmercado">e-mercado</h2>
+
+      <form id="inicioSesion">
+          <div class="mb-3">
+            <label for="emailUsuario" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailUsuario" aria-describedby="emailHelp" onkeypress="document.getElementById('validacionEmail').style.display = 'none';">
+            <p id="validacionEmail">debe ingresar un email válido</p>
+          </div>
+          <div class="mb-3">
+            <label for="contraseniaUsuario" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contraseniaUsuario" onkeypress="document.getElementById('validacionContrasenia').style.display = 'none';">
+            <p id="validacionContrasenia">debe ingresar una contraseña válida</p>
+          </div>
+          <button type="submit" class="btn">Ingresar</button>
+        </form>
+
+        <div>2022</div>
+  </div>
+ 
   </main>
   <footer class="text-muted">
     <div class="container">
@@ -35,6 +50,7 @@
     </div>
   </footer>
   <script src="js/login.js"></script>
+  <!-- <script src="js/init.js"></script> -->
 </body>
 
 </html>

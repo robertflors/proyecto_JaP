@@ -4,6 +4,7 @@ const contenedorProducto = document.getElementById('productoInfoDetallada');
 const tituloProducto = document.getElementById('tituloProductoInfo');
 const comentariosUsuarios = document.getElementById('productoComentariosDesplegados');
 const mostrarComentarios = document.getElementById('mostrarComentarios');
+const contenedorProducRela = document.getElementById('productosRelacionados');
 let comentarios;
 const formularioParaComentar = document.getElementById('comentarProducto');
 const formularioComentario = document.getElementById('nuevoComentario');
@@ -14,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(URL_CON_ID).then(function (resultObj) {
         if (resultObj.status === "ok") {
             tituloProducto.append(resultObj.data.name);
-            showProductsInfo(resultObj.data);    
+            showProductsInfo(resultObj.data);
+            showProductosRelacionados(resultObj.data.relatedProducts);    
         }
     });
 
@@ -50,7 +52,7 @@ function showProductsInfo(data){
       </li>
       <li class="list-group-item mb-4">
         <p class="h5 fw-bold">Imágenes ilustrativas</p>
-        <div class="container d-flex justify-content-evenly">
+        <div class="container d-flex justify-content-center">
           ${arrayImagenes(data.images)}
         </div>
       </li>
@@ -59,12 +61,34 @@ function showProductsInfo(data){
 }
 
 // función que itera el array de imágenes del producto y retorna un string de DIVS
-function arrayImagenes(imagenes) {
-    let grupoDivsImg = '';
-    for (const img of imagenes){
-        grupoDivsImg += `<div class="container shadow-sm p-3 mb-5 bg-body rounded"><img class="img-fluid" src="${img}"></div>`;
-    }
-    return grupoDivsImg;   
+function arrayImagenes(imagenes) {       
+   let grupoDivsImg = `
+   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="${imagenes[0]}" class="d-block">
+      </div>
+      <div class="carousel-item">
+        <img src="${imagenes[1]}" class="d-block">
+      </div>
+      <div class="carousel-item">
+        <img src="${imagenes[2]}" class="d-block">
+      </div>
+      <div class="carousel-item">
+        <img src="${imagenes[3]}" class="d-block">
+      </div>           
+    </div>    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>`
+
+  return grupoDivsImg; 
   }
 
 // función que muestra los comentarios de los usuarios
@@ -82,8 +106,7 @@ function showProductsComents(comentarios){
         `;
         // para colorear las estrellas según el puntaje de cada usuario
         puntuacionColor(comentario.score, comentario.user);
-    }
-            
+    }            
 }
 
 // FUNCION PARA AGREGAR LOS SPAN ESTRELLAS Y LES SETEA UNA CLASE PARTICULAR POR USUARIO
@@ -153,6 +176,25 @@ function comentarioRepetido(user){
    }
   // para verificar si está o no incluido el usuario en la lista de usuarios que comentaron
    return usuariosQueComentaron.indexOf(user) === -1;
+}
+
+// FUNCIÓN PARA MOSTRAR LOS PRODUCTOS RELACIONADOS AL PRODUCTO ACTUAL.
+function showProductosRelacionados (relacionados) {
+  let grupoDivs = '';
+    for (const producto of relacionados){
+        grupoDivs += `<div class="container shadow-sm p-3 mb-5 mt-5 bg-body rounded w-25 cursor-active" onclick="productoInfo(${producto.id})">
+                          <img class="w-100" src="${producto.image}">
+                          <p class="mt-3 text-center">${producto.name}</p>
+                      </div>`;
+    }
+    contenedorProducRela.innerHTML = grupoDivs;
+}
+// para redirigir a la página del producto relacionado al seleccionarlo
+function productoInfo(ID){
+  // seteamos el id en el localStorage y redirigimos a productos info
+  localStorage.removeItem('productoInfoID');
+  localStorage.setItem('productoInfoID', ID);
+  window.location.href = "product-info.html";
 }
 
 // EVENTO PARA MOSTRAR LOS COMENTARIOS
