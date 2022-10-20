@@ -57,3 +57,4 @@ function cerrandoSesion(){
   // bastará con borrar el value del key, ya que el index.js tiene una condición que si el value de ese key es "null" redirigirá a login.html
   localStorage.removeItem('inicioSesionUsuario');
 }
+

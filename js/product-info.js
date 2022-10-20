@@ -9,14 +9,18 @@ let comentarios;
 const formularioParaComentar = document.getElementById('comentarProducto');
 const formularioComentario = document.getElementById('nuevoComentario');
 const formularioPuntuacion = document.getElementById('nuevaPuntuacion');
-
+// CARRITO------------------------------------------------------
+const carritoLocal = JSON.parse(localStorage.getItem('carrito'));
+let articulosCarrito = [...carritoLocal];
+const btn_agregar = document.getElementById('btn-agregarAlCarrito');
 
 document.addEventListener("DOMContentLoaded", function () {
     getJSONData(URL_CON_ID).then(function (resultObj) {
         if (resultObj.status === "ok") {
             tituloProducto.append(resultObj.data.name);
             showProductsInfo(resultObj.data);
-            showProductosRelacionados(resultObj.data.relatedProducts);    
+            showProductosRelacionados(resultObj.data.relatedProducts);  
+            articuloParaCarrito(resultObj.data);  
         }
     });
 
@@ -60,7 +64,7 @@ function showProductsInfo(data){
   </div>`
 }
 
-// función que itera el array de imágenes del producto y retorna un string de DIVS
+// función para generar el carrusel de las imágenes del producto
 function arrayImagenes(imagenes) {       
    let grupoDivsImg = `
    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -99,36 +103,26 @@ function showProductsComents(comentarios){
         comentariosUsuarios.innerHTML += `
         <li class="list-group-item">
             <div>
-                <p><strong>${comentario.user}</strong> - ${comentario.dateTime} - ${puntuacionProducto(comentario.user)}</p> 
+                <p><strong>${comentario.user}</strong> - ${comentario.dateTime} - ${puntuacionProducto(comentario.score)}</p> 
             </div>
             <p>${comentario.description}</p>
         </li>
         `;
-        // para colorear las estrellas según el puntaje de cada usuario
-        puntuacionColor(comentario.score, comentario.user);
     }            
 }
 
-// FUNCION PARA AGREGAR LOS SPAN ESTRELLAS Y LES SETEA UNA CLASE PARTICULAR POR USUARIO
-function puntuacionProducto(usuario){
-    let estrellas = `
-        <span class="fa fa-star puntuacionDe${usuario}"></span>
-        <span class="fa fa-star puntuacionDe${usuario}"></span>
-        <span class="fa fa-star puntuacionDe${usuario}"></span>
-        <span class="fa fa-star puntuacionDe${usuario}"></span>
-        <span class="fa fa-star puntuacionDe${usuario}"></span>
-    `;
-    return estrellas;
-}
+// FUNCION PARA AGREGAR LOS SPAN ESTRELLAS Y COLOREARLOS SEGÚN EL PUNTAJE
+function puntuacionProducto(puntaje){
+    let estrellas = ''; 
 
-// FUNCIÓN QUE "COLOREA" LAS ESTRELLAS SEGÚN EL PUNTAJE
-function puntuacionColor(puntaje, usuario){
-    // obtenemos un array de los spans particulares de cada usuario
-    let puntuacionProducto = comentariosUsuarios.getElementsByClassName(`puntuacionDe${usuario}`);
-    // vamos agregando la clase que colorea las estrellas al array de spans
-    for(let i=0; i < puntaje; i++){
-        puntuacionProducto[i].classList.add('checked');
+    for(let i=0; i<5; i++){
+      if(puntaje>i){
+        estrellas += '<span class="fa fa-star checked"></span>';
+      }else{
+        estrellas += '<span class="fa fa-star"></span>';
+      }
     }
+    return estrellas;
 }
 
 // FUNCIÓN PARA GENERAR UN NUEVO COMENTARIO EN NUESTRA LISTA DE COMENTARIOS
@@ -138,7 +132,7 @@ function nuevaCalificacion(e){
   let fecha = new Date(Date.now());
   let fechaComentario = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
   // buscamos el nombre del usuario actual en la página
-  let usuario = localStorage.getItem('usuario');
+  let usuario = localStorage.getItem('inicioSesionUsuario');
   // verificamos que el usuario haya llenado al menos el score del producto para poder calificar
   if(formularioPuntuacion.value !== 'tu puntuación'){
     // condicional con la función que retorna true si el usuario no ha hecho calificaciones aún
@@ -201,3 +195,34 @@ function productoInfo(ID){
 mostrarComentarios.addEventListener('click', ()=> showProductsComents(comentarios));
 // EVENTO PARA SUBIR LAS NUEVAS CALIFICACIONES
 formularioParaComentar.addEventListener('submit', nuevaCalificacion);
+
+//--------------------------AGREGAR PRODUCTOS AL CARRITO--------------------------------
+// crear objetos con el formato que se necesita para trabajarlos en el carrito
+class Articulo{
+  constructor(id, name, count, unitCost, currency, image){
+    this.id = id;
+    this.name = name;
+    this.count = count;
+    this.unitCost = unitCost;
+    this.currency = currency;
+    this.image = image;
+  }
+}
+
+// función para dar el formato adecuado al objeto
+function articuloParaCarrito(articulo){
+  let formatoCarrito = new Articulo(articulo.id, articulo.name, 1, articulo.cost, articulo.currency, articulo.images[0]);
+  if(JSON.stringify(articulosCarrito).indexOf(articulo.id) === -1){
+    articulosCarrito.push(formatoCarrito);
+  }
+}
+
+// función que setea en el localStorage el array con el producto agregado
+function agregarAlCarrito(articulos){
+  alert('artículo agregado al carrito');
+  localStorage.removeItem('carrito');
+  localStorage.setItem('carrito', JSON.stringify(articulos));
+}
+
+btn_agregar.addEventListener('click', ()=>agregarAlCarrito(articulosCarrito));
+

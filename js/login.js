@@ -1,5 +1,7 @@
 let alertaEmail = document.getElementById('validacionEmail');
 let alertaContrasenia = document.getElementById('validacionContrasenia');
+// creamos el carrito en el localStorage
+localStorage.setItem('carrito', JSON.stringify([]));
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("inicioSesion").addEventListener('submit', validarFormulario); 
@@ -30,7 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if ((booleano1 == true)&&(booleano2 == true)){
       localStorage.removeItem('inicioSesionUsuario');
       localStorage.setItem('inicioSesionUsuario', email.value);
+      localStorage.removeItem('inicioSesionUsuarioID');
+      localStorage.setItem('inicioSesionUsuarioID', "25801");
       window.location.href = 'index.html';
     }
   }
  
+  
