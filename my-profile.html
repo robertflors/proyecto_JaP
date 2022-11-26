@@ -45,7 +45,8 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="nav-item-usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="btn-secondary nav-link dropdown-toggle active" href="#" id="nav-item-usuario" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
             </a>
             <ul class="dropdown-menu" aria-labelledby="nav-item-usuario">
               <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
@@ -58,11 +59,61 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container my-5">
+      <h2 class="mb-5">Perfil</h2>
+      <hr>
+      <form class="needs-validation" id="formulario-perfil" novalidate>
+
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="perfil-nombre" class="form-label">Primer nombre *</label>
+            <input type="text" class="form-control" id="perfil-nombre" required>
+            <div class="invalid-feedback">
+              campo obligatorio.
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label for="perfil-nombre2" class="form-label">Segundo nombre</label>
+            <input type="text" class="form-control" id="perfil-nombre2">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="perfil-apellido" class="form-label">Primer apellido *</label>
+            <input type="text" class="form-control" id="perfil-apellido" required>
+            <div class="invalid-feedback">
+              campo obligatorio.
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label for="perfil-apellido2" class="form-label">Segundo apellido</label>
+            <input type="text" class="form-control" id="perfil-apellido2">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="perfil-email" class="form-label">Email *</label>
+            <input type="email" class="form-control" id="perfil-email" required>
+            <div class="invalid-feedback">
+              ingresa un un mail válido.
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label for="perfil-telefono" class="form-label">Teléfono de contacto</label>
+            <input type="number" class="form-control" id="perfil-telefono">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </form>
+
+
+
     </div>
+
+
   </main>
   <footer class="text-muted">
     <div class="container">
@@ -77,6 +128,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>
+  <script src="js/validacionBS.js"></script>
 </body>
 
 </html>

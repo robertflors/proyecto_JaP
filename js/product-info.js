@@ -222,6 +222,7 @@ function agregarAlCarrito(articulos){
   alert('artículo agregado al carrito');
   localStorage.removeItem('carrito');
   localStorage.setItem('carrito', JSON.stringify(articulos));
+  window.location.href = '../cart.html';
 }
 
 btn_agregar.addEventListener('click', ()=>agregarAlCarrito(articulosCarrito));

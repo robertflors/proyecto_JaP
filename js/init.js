@@ -44,8 +44,8 @@ let getJSONData = function (url) {
 // -------------------Agregando el nombre del usuario a la barra de navegación-----------------------
 function usuarioEnNavbar() {
   let navbarUsuario = document.getElementById('nav-item-usuario');
-  let usuario = localStorage.getItem('inicioSesionUsuario');
-   navbarUsuario.innerHTML = `${usuario}`; 
+  let usuario = JSON.parse(localStorage.getItem('USUARIO'));
+   navbarUsuario.innerHTML = `${usuario.email}`; 
 }
 usuarioEnNavbar();
 
@@ -56,5 +56,6 @@ cerrarSesion.addEventListener('click', cerrandoSesion);
 function cerrandoSesion(){
   // bastará con borrar el value del key, ya que el index.js tiene una condición que si el value de ese key es "null" redirigirá a login.html
   localStorage.removeItem('inicioSesionUsuario');
+  localStorage.removeItem('USUARIO');
 }
 
